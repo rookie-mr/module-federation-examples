@@ -3,7 +3,7 @@
  * Please stick to the next rules:
  * 1. Use existing methods. If you cant please make sure twice that you can't use existing methods
  * 2. Every new method need to be added to relevant section
- * 4. Please add a suitable name to the methods
+ * 3. Please add a suitable name to the methods
  *
  * NAVIGATION LIST
  * Clicks Section
@@ -20,10 +20,11 @@ import {CssAttr} from "../types/cssAttr";
 import {StubTypes} from "../types/stubTypes";
 import {RequestsTypes} from "../types/requestsTypes";
 import { readFile, writeTofile } from "../helpers/file-actions-helper";
+import {CommonTestData} from "../fixtures/commonTestData";
 
 export class BaseMethods {
 
-    /*
+ /*
  *---------------------------------------------------
  * CLICKS SECTION
  * Base methods for clicking on elements on the page
@@ -59,7 +60,8 @@ export class BaseMethods {
          wait = 0,
          isShadowRoot = false,
          index = 0,
-         parentSelector
+         parentSelector,
+         isTargetChanged = false
     }: {
         selector: string,
         text: string,
@@ -67,8 +69,18 @@ export class BaseMethods {
         wait?: number,
         isShadowRoot?: boolean,
         index?: number,
-        parentSelector?: string
+        parentSelector?: string,
+        isTargetChanged?: boolean
     }): void {
+        if(isTargetChanged) {
+            cy.get(selector).contains(text)
+                .should(($button: JQuery<HTMLElement>) => {
+                    $button.attr('target', '_self');
+                }).click()
+
+            return;
+        }
+
         if(parentSelector) {
             cy.get(parentSelector)
                 .find(selector)
@@ -94,7 +106,7 @@ export class BaseMethods {
             .wait(wait)
     }
 
-    /*
+/*
  *---------------------------------------------------
  * CHECKS SECTION
  * Base methods for various checks on page
@@ -124,7 +136,15 @@ export class BaseMethods {
         })
     }
 
-    public checkUrlText(url: string, isInclude: boolean = false): void {
+    public checkUrlText(url: string, isInclude: boolean = false, isDifferentOrigin: boolean = false): void {
+        if(isDifferentOrigin) {
+            cy.origin(url, { args: { isInclude, url } }, ({ isInclude, url }) => {
+                cy.url().should(isInclude ? 'include' : 'not.include', url);
+            });
+
+            return;
+        }
+
         cy.url().should(isInclude ? 'include' : 'not.include', url);
     }
 
@@ -321,7 +341,9 @@ export class BaseMethods {
     public checkNetworkCallCreated(requestType: RequestsTypes, url: string, localhost: number, statusCode: number): void {
         cy.intercept(requestType, url).as('networkCall');
         // Extra visit required cause intercept needs to be created before visit
-        this.openLocalhost(localhost)
+        this.openLocalhost({
+            number: localhost
+        })
         cy.wait('@networkCall').then((interception) => {
             if(interception.response) {
                 cy.wrap(interception.response.statusCode).should('eq', statusCode)
@@ -340,7 +362,9 @@ export class BaseMethods {
          isShadowElement = false,
          text,
          isParent = false,
-         checkType = 'contains'
+         checkType = 'contains',
+         isWithInvoke = true,
+         isInclude = true
      }: {
          selector: string,
          attr?: string,
@@ -352,7 +376,9 @@ export class BaseMethods {
          isShadowElement?: boolean,
          text?: string,
          isParent?: boolean,
-         checkType?: string
+         checkType?: string,
+         isWithInvoke?: boolean,
+         isInclude?: boolean
      }
     ): Cypress.Chainable<JQuery<HTMLElement>> {
         if(text) {
@@ -361,19 +387,30 @@ export class BaseMethods {
                     .contains(text)
                     .parent()
                     .invoke(attr, prop)
-                    .should('include', value)
+                    .should(isInclude? 'include' : 'not.include', value)
 
                 // @ts-ignore
                 return;
             }
 
             if (parentSelector && index) {
+              cy.get(parentSelector)
+                .find(selector)
+                .eq(index)
+                .contains(text)
+                .invoke(attr, prop)
+                .should(isInclude? 'include' : 'not.include', value)
+
+              // @ts-ignore
+              return;
+            }
+
+            if (parentSelector) {
                 cy.get(parentSelector)
                     .find(selector)
-                    .eq(index)
                     .contains(text)
                     .invoke(attr, prop)
-                    .should('include', value)
+                    .should(isInclude? 'include' : 'not.include', value)
 
                 // @ts-ignore
                 return;
@@ -394,14 +431,14 @@ export class BaseMethods {
           return cy.get(selector)
                 .contains(text)
                 .invoke(attr, prop)
-                .should('include', value)
+                .should(isInclude? 'include' : 'not.include', value)
         }
 
         if(index) {
             return cy.get(selector)
                 .eq(index)
                 .invoke(attr, prop)
-                .should('include', value)
+                .should(isInclude? 'include' : 'not.include', value)
         }
 
         if(parentSelector && isShadowElement) {
@@ -409,14 +446,14 @@ export class BaseMethods {
                 .shadow()
                 .find(selector)
                 .invoke(attr, prop)
-                .should('include', value)
+                .should(isInclude? 'include' : 'not.include', value)
         }
 
         if(parentSelector) {
             return cy.get(parentSelector)
                 .find(selector)
                 .invoke(attr, prop)
-                .should('include', value)
+                .should(isInclude? 'include' : 'not.include', value)
         }
 
         if(isMultiple) {
@@ -426,9 +463,13 @@ export class BaseMethods {
                 });
         }
 
+        if(!isWithInvoke) {
+            return cy.get(selector).should(prop, value)
+        }
+
         return cy.get(selector)
             .invoke(attr, prop)
-            .should('include', value)
+            .should(isInclude? 'include' : 'not.include', value)
     }
 
     public checkElementQuantity({
@@ -669,7 +710,7 @@ export class BaseMethods {
         }), { log: false });
     }
 
-    /*
+/*
 *---------------------------------------------------
 * WRITES SECTION
 * Base methods for writing values in inputs/files
@@ -679,14 +720,25 @@ export class BaseMethods {
     public writeContentToFile({
          filePath,
          content,
-         wait = 500
+         wait = 500,
+         contentFilePath
     }: {
         filePath: string,
-        content: string
-        wait?: number
+        content?: string
+        wait?: number,
+        contentFilePath?: string
     }): void {
-        writeTofile(filePath, content)
-        cy.wait(wait)
+        if(contentFilePath) {
+            readFile(contentFilePath).then((file: string) => {
+                writeTofile(filePath, file)
+                cy.wait(wait)
+            })
+        }
+
+        if(content) {
+            writeTofile(filePath, content)
+            cy.wait(wait)
+        }
     }
 
     public fillField({
@@ -712,7 +764,7 @@ export class BaseMethods {
             .fill(text);
     }
 
-    /*
+/*
 *---------------------------------------------------
 * HELPERS SECTION
 * Base methods for activities like visit, go back,
@@ -724,11 +776,36 @@ export class BaseMethods {
         cy.skipWhen(condition)
     }
 
-    public openLocalhost(number: number, path?: string): Cypress.Chainable<Cypress.AUTWindow> {
+    public hoverElement({
+         selector,
+         text,
+         wait = 0
+    }: {
+        selector: string,
+        text?: string,
+        wait?: number
+    }): void {
+        if (text) {
+            cy.wait(wait).get(selector).contains(text).realHover()
+
+            return;
+        }
+
+        cy.wait(wait).get(selector).realHover()
+    }
+
+    public openLocalhost({
+        number,
+        path
+    }: {
+        number: number,
+        path?: string
+    }): Cypress.Chainable<Cypress.AUTWindow> {
         return path ?
             cy.visit(`${Cypress.env(`localhost${number}`)}/${path}`)
             :
             cy.visit(Cypress.env(`localhost${number}`));
+
     }
 
     public reloadWindow(withoutCache: boolean = false): void {
@@ -743,7 +820,7 @@ export class BaseMethods {
         return selector.includes(Constants.selectorParts.sharedRoutingAppSelectorsParts.userInfo.toUpperCase()) ? baseSelectors.tags.inputs.textarea : baseSelectors.tags.inputs.input
     }
 
-    /*
+/*
 *---------------------------------------------------
 * ACTIVITIES SECTION
 * Base methods related to specific actions
@@ -800,7 +877,133 @@ export class BaseMethods {
             });
     }
 
-    /*
+    public checkOutsideResourceUrl({
+         parentSelector,
+         selector,
+         text,
+         link,
+         isInclude = true
+     }: {
+        parentSelector?: string,
+        selector: string,
+        text: string,
+        link: string,
+        isInclude?: boolean
+    }): void {
+        if(parentSelector) {
+            this.clickElementWithText({
+                parentSelector,
+                selector,
+                text,
+                isTargetChanged: true
+            })
+        } else {
+            this.clickElementWithText({
+                selector,
+                text,
+                isTargetChanged: true
+            })
+        }
+        this.checkUrlText(link, isInclude, true)
+    }
+
+    public changeRootFile({
+         changedContentFilePath,
+         rootFilePath,
+         originalContentFilePath,
+     }: {
+        changedContentFilePath: string,
+        rootFilePath: string,
+        originalContentFilePath: string
+    }): void {
+        cy.wait(2000)
+        this.checkElementWithTextPresence({
+            selector: baseSelectors.tags.paragraph,
+            text: Constants.commonConstantsData.nextJsAppsCommonPhrases.messages.start,
+            visibilityState: 'be.visible'
+        })
+        this.writeContentToFile({
+            contentFilePath: changedContentFilePath,
+            filePath: rootFilePath,
+            wait: 1000
+        })
+        this.reloadWindow()
+        this.checkElementWithTextPresence({
+            selector: baseSelectors.tags.paragraph,
+            text: Constants.commonConstantsData.nextJsAppsCommonPhrases.messages.start,
+            isVisible: false
+        })
+        this.checkElementWithTextPresence({
+            selector: baseSelectors.tags.paragraph,
+            text: Constants.commonConstantsData.nextJsAppsCommonPhrases.messages.start.replace('started', 'TESTED'),
+            visibilityState: 'be.visible'
+        })
+        this.writeContentToFile({
+            contentFilePath: originalContentFilePath,
+            filePath: rootFilePath,
+            wait: 1000
+        })
+        this.reloadWindow()
+        this.checkElementWithTextPresence({
+            selector: baseSelectors.tags.paragraph,
+            text: Constants.commonConstantsData.nextJsAppsCommonPhrases.messages.start,
+            visibilityState: 'be.visible'
+        })
+    }
+
+    public checkLinkedCardsFunctionality(host: number): void {
+        this.checkOutsideResourceUrl({
+            parentSelector: baseSelectors.tags.headers.h1,
+            selector: baseSelectors.tags.coreElements.link,
+            text: CommonTestData.nextJsAppsHeaderLinkName,
+            link: Constants.commonConstantsData.commonLinks.nextJs,
+        })
+        Constants.commonConstantsData.nextJsAppsCommonPhrases.linksCardsText.forEach((text: string, index: number) => {
+            this.openLocalhost({
+                number: host
+            })
+            this.checkOutsideResourceUrl({
+                selector: commonSelectors.nextJsAppsLinkCard,
+                text,
+                link: Constants.commonConstantsData.commonLinks.nextJsAppsCardsLinks[index],
+            })
+        })
+        // TODO: Failed for now due to dynamic animations loading on new page. Extra investigate required
+        // this.openLocalhost(host)
+        // this.checkOutsideResourceUrl({
+        //         parentSelector: baseSelectors.tags.footer,
+        //         selector: baseSelectors.tags.coreElements.link,
+        //         text: Constants.commonConstantsData.nextJsAppsCommonPhrases.messages.engine,
+        //         link: Constants.commonConstantsData.commonLinks.vercel,
+        // })
+    }
+
+    public checkLinkedCardsHoverAnimation(): void {
+        Constants.commonConstantsData.nextJsAppsCommonPhrases.linksCardsText.forEach((text: string) => {
+            this.reloadWindow()
+            this.checkElementHaveProperty({
+                selector: commonSelectors.nextJsAppsLinkCard,
+                prop: CssAttr.color,
+                value: Constants.color.skyBlue,
+                text,
+                isInclude: false,
+            })
+            this.hoverElement({
+                selector: commonSelectors.nextJsAppsLinkCard,
+                text,
+                wait: 2000
+            })
+            this.checkElementHaveProperty({
+                selector: commonSelectors.nextJsAppsLinkCard,
+                prop: CssAttr.color,
+                value: Constants.color.skyBlue,
+                text,
+            })
+        })
+    }
+
+
+/*
 *---------------------------------------------------
 * PRIVATES SECTION
 * Base private methods

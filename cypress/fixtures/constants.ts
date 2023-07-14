@@ -6,12 +6,36 @@ export class Constants {
             app2: 'self-healing/app2/webpack.config.js',
         },
         serverSideRenderOnlyChangeFilePath: 'server-side-render-only/remoteServer/SharedComponent.js',
+        nextJsHostReactRemoteApp: {
+            files: {
+                root: 'react-nextjs/nextjs-host-react-remote/host/pages/index.js',
+                changedContent: 'react-nextjs/nextjs-host-react-remote/e2e/fixtures/changedContent.js',
+                originalContent: 'react-nextjs/nextjs-host-react-remote/e2e/fixtures/originalContent.js'
+            }
+        },
+        nextJsHostRemoteApp: {
+            files: {
+                roots: {
+                    host: 'react-nextjs/nextjs-host-remote/host/pages/index.js',
+                    remote: 'react-nextjs/nextjs-host-remote/remote/pages/index.js',
+                },
+                contents: {
+                   original: {
+                       host: 'react-nextjs/nextjs-host-remote/e2e/fixtures/host/originalContent.js',
+                       remote: 'react-nextjs/nextjs-host-remote/e2e/fixtures/remote/originalContent.js',
+                   },
+                    changed: {
+                       host: 'react-nextjs/nextjs-host-remote/e2e/fixtures/host/changedContent.js',
+                       remote: 'react-nextjs/nextjs-host-remote/e2e/fixtures/remote/changedContent.js',
+                    }
+                },
+            }
+        }
     }
 
     public static readonly selectorParts = {
-        vue3DemoFederationWithViteApp : {
+        vue3DemoFederationWithViteApp: {
             vite: 'vite',
-            webpack: 'webpack'
         },
         sharedRoutingAppReplaceSelectorPart: 'RECENT_',
         formFieldNames: {
@@ -29,29 +53,32 @@ export class Constants {
     }
 
     public static readonly commonConstantsData = {
-       commonCountAppNames: {
-            app1 : 'App 1',
+        commonCountAppNames: {
+            app1: 'App 1',
             app2: 'App 2',
             app3: 'App 3'
         },
         button: 'Button',
+        header: 'Header',
         widget: 'Widget',
+        webpack: 'webpack',
+        counter: 'Counter',
         home: 'Home',
         commonIndexes: {
-           minusOne: -1,
-           zero: 0,
-           one: 1,
-           two: 2,
-           three: 3,
-           four: 4,
-           five: 5,
-           ten: 10,
-           eleven: 11
+            minusOne: -1,
+            zero: 0,
+            one: 1,
+            two: 2,
+            three: 3,
+            four: 4,
+            five: 5,
+            ten: 10,
+            eleven: 11
         },
         basicComponents: {
-           host: 'Host',
-           remote: 'Remote',
-           basicHostRemote: 'Basic Host-Remote'
+            host: 'Host',
+            remote: 'Remote',
+            basicHostRemote: 'Basic Host-Remote'
         },
         commonButtonWithEmoji: '💅 Button',
         loading: 'Loading',
@@ -63,10 +90,19 @@ export class Constants {
         },
         standardPhrase: 'May The Force Be With You',
         commonLinks: {
-           page1: '/page-1',
-           page2:  '/page-2',
-           baseLink: '/' ,
-           cellLink: '#/',
+            page1: '/page-1',
+            page2: '/page-2',
+            baseLink: '/',
+            cellLink: '#/',
+            react: 'https://reactjs.org',
+            vercel: 'https://vercel.com',
+            nextJs: 'https://nextjs.org/',
+            nextJsAppsCardsLinks: [
+                'https://nextjs.org/docs',
+                'https://nextjs.org/learn/foundations/about-nextjs',
+                'https://github.com/vercel/next.js/tree/canary/examples',
+                'https://vercel.com',
+            ]
         },
         typeScript: 'typescript',
         commonMicroFrontendsAppsCardsSymbolsNames: {
@@ -83,27 +119,31 @@ export class Constants {
             displayNone: 'display: none;',
         },
         translationInfo: {
-           reactAppsTranslations: {
-               reactTypes: {
-                   host: 'React Host :',
-                   remote: 'React Remote :'
-               },
-               remoteMicroFrontEndIntroduction: {
-                   english: 'Here\'s my micro frontend remote child :',
-                   francais: 'Voici mon micro frontend remote child :',
-               },
-               changeLanguageMessage: {
-                   english: 'change language',
-                   francais: 'changer la langue'
-               },
-               mainTextMessage: 'This is the main text',
-               fromNextHostMessage: 'from Next Host',
-           }
+            reactAppsTranslations: {
+                reactTypes: {
+                    host: 'React Host :',
+                    remote: 'React Remote :'
+                },
+                remoteMicroFrontEndIntroduction: {
+                    english: 'Here\'s my micro frontend remote child :',
+                    francais: 'Voici mon micro frontend remote child :',
+                },
+                changeLanguageMessage: {
+                    english: 'change language',
+                    francais: 'changer la langue'
+                },
+                mainTextMessage: 'This is the main text',
+                fromNextHostMessage: 'from Next Host',
+            }
         },
         commonAngularAppsData: {
             mdmfShellName: 'MDMF SHELL',
-            mdmfProfile: { name: 'MDMF PROFILE', path: 'profile' },
-            mdmfNavigationItemLogo: { link: 'http://mellondev.net', gitHubLink: 'https://github.com/pegaltier/', targetBlank: '_blank' },
+            mdmfProfile: {name: 'MDMF PROFILE', path: 'profile'},
+            mdmfNavigationItemLogo: {
+                link: 'http://mellondev.net',
+                gitHubLink: 'https://github.com/pegaltier/',
+                targetBlank: '_blank'
+            },
             headers: {
                 shell: 'Microfrontend Shell',
                 profile: 'Profile (Microfrontend)',
@@ -137,6 +177,20 @@ export class Constants {
         },
         helloWorldMessage: 'Hello World',
         commonVueAppComponentState: 'Remote Component in Action..',
+        nextJsAppsCommonPhrases: {
+            linksCardsText: [
+                'Documentation →Find in-depth information about Next.js features and API.',
+                'Learn →Learn about Next.js in an interactive course with quizzes!',
+                'Examples →Discover and deploy boilerplate example Next.js projects.',
+                'Deploy →Instantly deploy your Next.js site to a public URL with Vercel.'
+            ],
+            messages: {
+                start: 'Get started by editing pages/index.js',
+                engine: 'Powered by',
+                welcome: 'Welcome to Next.js!',
+                footer: 'Scipt is only needed if you are not using the federation @ syntax when setting your remotes.',
+            }
+        }
     }
 
     public static readonly updatedConstantsData = {
@@ -186,7 +240,7 @@ export class Constants {
                 francais: {
                     title: Constants.commonConstantsData.translationInfo.reactAppsTranslations.remoteMicroFrontEndIntroduction.francais,
                     button: `${Constants.commonConstantsData.translationInfo.reactAppsTranslations.changeLanguageMessage.francais} depuis ${Constants.commonConstantsData.translationInfo.reactAppsTranslations.fromNextHostMessage}`,
-                    text:`Ceci est le texte principal ${Constants.commonConstantsData.translationInfo.reactAppsTranslations.fromNextHostMessage.replace('from', 'de')}`
+                    text: `Ceci est le texte principal ${Constants.commonConstantsData.translationInfo.reactAppsTranslations.fromNextHostMessage.replace('from', 'de')}`
                 },
             },
         },
@@ -199,7 +253,32 @@ export class Constants {
     }
 
     public static readonly elementsText = {
-        vue3DemoFederationWithViteApp : {
+        reactNestedRoutersApp: {
+            shellAppTextedLinks: [
+                'App1 Page1',
+                'App1 Page2',
+                'App2 PageA',
+                'App2 PageB',
+                'Go to Page 2',
+            ],
+            shellAppLinks: [
+                '/app-1/page-1',
+                '/app-1/page-2',
+                '/app-2/page-a',
+                '/app-2/page-b',
+            ],
+            replaceValues: [
+                '2',
+                'B',
+                'Page 1',
+                'Page 2',
+                '1',
+                'Page A',
+                'Page B',
+                'A'
+            ]
+        },
+        vue3DemoFederationWithViteApp: {
             viteContent: 'Vite Content',
             webpackContent: 'Webpack Content',
         },
@@ -309,11 +388,15 @@ export class Constants {
                 alertText: 'Hello'
             },
             comprehensiveDemoDemoPages: [
-                { name: 'Main', link: Constants.commonConstantsData.commonLinks.cellLink, index: Constants.commonConstantsData.commonIndexes.zero },
-                { name: 'UI Library', link: '#/ui-library', index: Constants.commonConstantsData.commonIndexes.one},
-                { name: 'Dialog', link: '#/dialog', index: Constants.commonConstantsData.commonIndexes.two },
-                { name: 'Svelte Page', link: '#/svelte', index: Constants.commonConstantsData.commonIndexes.three },
-                { name: 'Routing', link: '#/routing/foo', index: Constants.commonConstantsData.commonIndexes.four },
+                {
+                    name: 'Main',
+                    link: Constants.commonConstantsData.commonLinks.cellLink,
+                    index: Constants.commonConstantsData.commonIndexes.zero
+                },
+                {name: 'UI Library', link: '#/ui-library', index: Constants.commonConstantsData.commonIndexes.one},
+                {name: 'Dialog', link: '#/dialog', index: Constants.commonConstantsData.commonIndexes.two},
+                {name: 'Svelte Page', link: '#/svelte', index: Constants.commonConstantsData.commonIndexes.three},
+                {name: 'Routing', link: '#/routing/foo', index: Constants.commonConstantsData.commonIndexes.four},
             ],
         },
         angularReactShellApp: {
@@ -336,11 +419,11 @@ export class Constants {
                 secondParagraph: 'component-app',
             },
             buttons: {
-               primaryButton: 'primary',
-               warningButton: 'warning',
-               openDialogButton: 'click me to open Dialog',
-               h4Buttons: 'Buttons:',
-               closeButton: 'close It!',
+                primaryButton: 'primary',
+                warningButton: 'warning',
+                openDialogButton: 'click me to open Dialog',
+                h4Buttons: 'Buttons:',
+                closeButton: 'close It!',
             },
             h4Dialog: 'Dialog:',
             h4HoverElement: 'hover me please',
@@ -348,8 +431,8 @@ export class Constants {
         },
         differentReactVersionsIsolatedApp: {
             headers: {
-               app1: 'Host Application - React Version 17.0.2',
-               app2:  'Remote Application - React Version 16.14.0',
+                app1: 'Host Application - React Version 17.0.2',
+                app2: 'Remote Application - React Version 16.14.0',
             }
         },
         serverSideRenderOnlyApp: {
@@ -367,30 +450,30 @@ export class Constants {
             }
         },
         nextJsSsrApp: {
-           shop: 'Shop',
-           checkout: 'Checkout',
-           zeit: 'ZEIT',
-           gitHub: 'GitHub',
-           messages: {
-               welcomeMessage: 'Welcome to Next.js on Webpack 5! ',
-               checkoutMessage: 'This is a federated page owned by localhost:3000',
-           },
-           texts: {
-               text1: 'Data from federated ',
-               text2: 'getInitalProps',
-               text3: 'This came fom checkout !!!',
-               text4: 'And it works like a charm v2',
-               text5: 'To get started, edit pages/index.js and save to reload.',
-               mainShopText: 'This is a federated page owned by localhost:3002',
-           },
+            shop: 'Shop',
+            checkout: 'Checkout',
+            zeit: 'ZEIT',
+            gitHub: 'GitHub',
+            messages: {
+                welcomeMessage: 'Welcome to Next.js on Webpack 5! ',
+                checkoutMessage: 'This is a federated page owned by localhost:3000',
+            },
+            texts: {
+                text1: 'Data from federated ',
+                text2: 'getInitalProps',
+                text3: 'This came fom checkout !!!',
+                text4: 'And it works like a charm v2',
+                text5: 'To get started, edit pages/index.js and save to reload.',
+                mainShopText: 'This is a federated page owned by localhost:3002',
+            },
             pages: {
-               checkoutPage: 'checkout page',
-               shopPage: 'Shop Page',
+                checkoutPage: 'checkout page',
+                shopPage: 'Shop Page',
             },
             tiles: {
-               documentation: 'Documentation →',
-               learn: 'Next.js Learn →',
-               examples: 'Examples →',
+                documentation: 'Documentation →',
+                learn: 'Next.js Learn →',
+                examples: 'Examples →',
             },
             json: '{\n  "userId": 1,\n  "id": 1,\n  "title": "delectus aut autem",\n  "completed": false\n}',
         },
@@ -529,19 +612,19 @@ export class Constants {
             }
         },
         nativeFederationReactApp: {
-           messages: {
-               consoleMessages: {
-                   dateMessage: '2023-01-01 is a Sun.',
-                   weekendMessage: 'No long weekend ☹',
-                   loadingModuleMessage: 'loading remote module ...',
-                   remoteModuleMessage: 'got remote module: '
-               },
-               pageMessages: {
-                   checkConsoleMessage: 'Have a look into your JavaScript console ...',
-                   remoteComponentGreeting: 'I\'m the remote\'s React Component!',
-                   changeComponentMessage: 'Edit src/App.tsx and save to reload.',
-               }
-           },
+            messages: {
+                consoleMessages: {
+                    dateMessage: '2023-01-01 is a Sun.',
+                    weekendMessage: 'No long weekend ☹',
+                    loadingModuleMessage: 'loading remote module ...',
+                    remoteModuleMessage: 'got remote module: '
+                },
+                pageMessages: {
+                    checkConsoleMessage: 'Have a look into your JavaScript console ...',
+                    remoteComponentGreeting: 'I\'m the remote\'s React Component!',
+                    changeComponentMessage: 'Edit src/App.tsx and save to reload.',
+                }
+            },
             elementsTexts: {
                 linkName: 'Learn React',
                 buttonText: 'click me 0',
@@ -561,6 +644,37 @@ export class Constants {
                 invoices: 'Invoices',
                 expenses: 'Expenses'
             },
+        },
+        react18CodeSplittingApp: {
+            app1: {
+                appName: 'App1',
+            },
+            app2: {
+                appName: 'App2'
+            },
+            header: 'Module Federation Example: React 18 Code Splitting',
+            button: 'Toggle Content',
+            test: 'test'
+        },
+        reactApps:{
+            app1: {
+                subHeader: 'This is the App 1 application.',
+            },
+            app2: {
+                subHeader: 'This is the App 2 application.',
+            }, 
+            splitedApp:{
+                header: 'App 2: Content',
+                subHeader: 'This is the content from app2.',
+                inputText: 'Custom text: '
+            },
+            header: 'Module Federation Example: Server Side Rendering',
+            header3: 'Type something into this input',
+            idField: "1337",
+            nameField: "John Doe",
+            companyfield: "Acme Inc.",
+            regularButton: 'Regular Button',
+            loadableButton: 'Loadable Button'
         },
         reactHostNextJsApp: {
             remoteComponents: {
@@ -607,17 +721,17 @@ export class Constants {
                 routeButton: 'Route',
                 subheader1: 'Exposed from Child',
                 subheader2: 'Listening in Parent',
-                counter: 'Counter',
+                counter: 'Counter'
             },
             appButtonDiv: 'App Button',
             appButtonClickMeButton: 'Click me',
             appListDiv: 'AppList',
             names: [
-                { name: 'Gualtiero', index: Constants.commonConstantsData.commonIndexes.five },
-                { name: 'Riyaz', index: Constants.commonConstantsData.commonIndexes.four },
-                { name: 'Quy', index: Constants.commonConstantsData.commonIndexes.three },
-                { name: 'Sang', index: Constants.commonConstantsData.commonIndexes.two },
-                { name: 'Loris', index: Constants.commonConstantsData.commonIndexes.one }
+                {name: 'Gualtiero', index: Constants.commonConstantsData.commonIndexes.five},
+                {name: 'Riyaz', index: Constants.commonConstantsData.commonIndexes.four},
+                {name: 'Quy', index: Constants.commonConstantsData.commonIndexes.three},
+                {name: 'Sang', index: Constants.commonConstantsData.commonIndexes.two},
+                {name: 'Loris', index: Constants.commonConstantsData.commonIndexes.one}
             ]
         },
         commonMicroFrontendsApps: {
@@ -684,19 +798,48 @@ export class Constants {
             }
         },
         rustWasmApp: {
-          buttonsNames: [
-              'Play ▶️',
-              'Tick 🔂',
-              'Reset ♻️',
-              'Stop 🛑'
-          ],
+            buttonsNames: [
+                'Play ▶️',
+                'Tick 🔂',
+                'Reset ♻️',
+                'Stop 🛑'
+            ],
         },
-        rollupFederationDemoApp: {
-            headerText: 'Header'
+        viteReactSimpleApp: {
+            buttons: {
+                webpack: 'Webpack Remote Button',
+                counter: 'count is: 0'
+            },
+            links: [
+                'Learn React',
+                'Vite Docs'
+            ]
+        },
+        angularVue: {
+            angularAppHead: 'Welcome to the Angular 15 Microfrontend demo using Webpack 5 Module Federation',
+            vueWebComponentTitle: 'Vue Remote Custom Element Content',
+            vueAsApplicationTitle: 'Vue Remote Create App Content',
+            interactionTextInitial: 'Some Content',
+            interactionTextChanged: 'Interaction Works'
+        },
+        nextJSv12App: {
+            federatedButton: {
+                name: 'Federated Catch All',
+                header: 'PDP!!!'
+            }
         }
     }
 
     public static readonly commonPhrases = {
+        reactNestedRoutersApp: {
+            pagesMessages: {
+                page1App1: 'Page 1 from App1',
+                pageAApp2: 'Page A from App2',
+                page2App1: 'Page 2 from App1',
+                pageBApp2: 'Page B from App2',
+            },
+            loadingMessage: 'Loading App1...',
+        },
         vue3DemoFederationWithViteApp: {
             greetings: {
                 vite: 'im from Vite',
@@ -718,10 +861,10 @@ export class Constants {
         rustWasmApp: {
             commonHostAppName: 'Host App',
             consoleMessages: {
-                startLoopMessage:'Infinite looping in progress',
-                stopLoopMessage:'Looping successfully stopped',
-                tickLoopMessage:'Game board successfully rerendered',
-                resetLoopMessage:'Game board successfully reset',
+                startLoopMessage: 'Infinite looping in progress',
+                stopLoopMessage: 'Looping successfully stopped',
+                tickLoopMessage: 'Game board successfully rerendered',
+                resetLoopMessage: 'Game board successfully reset',
                 baseLoadingMessage: 'I love rust and wasm!'
             },
         },
@@ -766,17 +909,17 @@ export class Constants {
                 app1: 'App 1 Host',
                 app2: 'App 2: Remote',
             },
-           lodashVersions: {
+            lodashVersions: {
                 app1: 'Lodash v4.10.0',
                 app2: 'Lodash v4.17.21',
-           },
-           messages: {
+            },
+            messages: {
                 notAvailable: '(lodash.nth not available until lodash@4.11)',
                 undefinedVersion: 'typeof lodash.nth// => undefined',
                 definedVersion: 'typeof lodash.nth// => function',
-           },
-           ntxCode: 'nth([\'a\', \'b\'], -1)// => "b"',
-           remoteComponentHeader: 'Remote Component',
+            },
+            ntxCode: 'nth([\'a\', \'b\'], -1)// => "b"',
+            remoteComponentHeader: 'Remote Component',
         },
         completeReactCaseApp: {
             input: 'Test Input',
@@ -800,6 +943,23 @@ export class Constants {
                 'I\'m RxJs from remote',
                 'remote got message:'
             ]
+        },
+        federatedStyles: {
+            header: 'Federated Styles',
+            reactAppContainer: 'React App Container',
+            nextJsAppContainer: 'NextJs App Container',
+            buttonsText: {
+                red: 'Red className Button Federated Css injected',
+                black: 'Black Button Federated Css variables inject and used in internal css',
+                orange: 'Orange Button Federated Scss injected',
+                brown: 'Brown Button Federated Less injected',
+                yellow: 'Yellow Button Federated Css Module',
+                redBlue: 'Red className Button but blue Css Module (classname collision does not affect)',
+                aquamarine: 'App 3 Button with Federated Jss styling',
+                purple: 'Federated Styled Button',
+                tailwindBlue: 'Federated button styled with Tailwind',
+                tailwindGreen: 'Button with Federated Tailwind css.',
+            }
         },
         craReactApp: {
             hostApp: 'This is the host application.',
@@ -830,15 +990,32 @@ export class Constants {
                 rollupHost: 'Rollup Host'
             },
             buttonText: 'Webpack Remote Button'
+        },
+        viteReactSimpleApp: {
+            messages: {
+                intro: 'Hello Vite + federation! +1+2+3+4',
+                edit: 'Edit App.tsx and save to test HMR updates.'
+            }
+        },
+        nextJsHostReactRemoteApp: {
+            messages: {
+                remotes: {
+                    component: 'This component is from the Host React App hosted at localhost:8081',
+                    page: 'This is the Remote App'
+                },
+            },
+        },
+        nextJsHostRemoteApp: {
+            remoteComponentMessage: 'Hello from Remote Nextjs component'
         }
     }
 
     public static readonly color = {
         nonRgbValues: {
-           red: 'color: red;',
-           borderBlack: 'border: 1px solid black; padding: 12px;',
-           borderRed1px: '1px solid rgb(255, 0, 0)',
-           borderRed: 'border: 2px dotted red; padding: 20px;'
+            red: 'color: red;',
+            borderBlack: 'border: 1px solid black; padding: 12px;',
+            borderRed1px: '1px solid rgb(255, 0, 0)',
+            borderRed: 'border: 2px dotted red; padding: 20px;'
         },
         red: 'rgb(136, 0, 0)',
         deepBlue: 'rgb(0, 0, 204)',
@@ -869,7 +1046,19 @@ export class Constants {
         white: 'rgb(255, 255, 255)',
         lightGrey: 'rgb(239, 239, 239)',
         darkGrey: 'rgb(40, 44, 52)',
-        darkSaturatedBlue: 'rgb(0, 0, 255)'
+        darkSaturatedBlue: 'rgb(0, 0, 255)',
+        mint: 'rgb(97, 218, 251)',
+        skyBlue: 'rgb(0, 112, 243)',
+        lightMint: 'rgb(95, 158, 160)',
+        absoluteOrange: 'rgb(255, 165, 0)',
+        brown: 'rgb(165, 42, 42)',
+        absoluteBlue: 'rgb(0, 0, 255)',
+        absoluteRed: 'rgb(255, 0, 0)',
+        absolutePurple: 'rgb(128, 0, 128)',
+        absoluteBlack: 'rgb(0, 0, 0)',
+        tailwindBlue: 'rgb(59, 130, 246)',
+        tailwindGreen: 'rgb(34, 197, 94)',
+        transparent: 'rgba(0, 0, 0, 0)',
     }
 
     public static readonly hrefs = {
@@ -883,12 +1072,12 @@ export class Constants {
                 name: 'babel',
             },
             router: {
-               link: 'https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router',
-               name: 'router',
+                link: 'https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router',
+                name: 'router',
             },
             vuex: {
-               link: 'https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex',
-               name: 'vuex',
+                link: 'https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex',
+                name: 'vuex',
             },
             esLint: {
                 link: 'https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint',
@@ -912,7 +1101,7 @@ export class Constants {
                 name: 'Twitter',
             },
             news: {
-                link:'https://news.vuejs.org',
+                link: 'https://news.vuejs.org',
                 name: 'News'
             },
             vueRouter: {
@@ -929,8 +1118,8 @@ export class Constants {
                 name: 'vue-loader',
             },
             awesomeVue: {
-              link: 'https://github.com/vuejs/awesome-vue',
-              name: 'awesome-vue',
+                link: 'https://github.com/vuejs/awesome-vue',
+                name: 'awesome-vue',
             },
             aboutTab: '#/about',
         },
@@ -947,7 +1136,6 @@ export class Constants {
             learnAboutNext: 'https://nextjs.org/learn/foundations/about-nextjs',
             deprecatedMainExamples: 'https://github.com/vercel/next.js/tree/deprecated-main/examples',
         },
-        nativeFederationReactAppUrl: 'https://reactjs.org',
         comprehensiveDemoApp: {
             gitHub: 'https://github.com/module-federation/mfe-webpack-demo',
             app3: 'http://localhost:3003/',
@@ -957,16 +1145,71 @@ export class Constants {
             demoSvelte: '#/svelte',
         },
         reactHmrApp: {
-          button: '/button',
-          heading: {
-              link: '/heading',
-              name: 'Heading',
-          },
+            button: '/button',
+            heading: {
+                link: '/heading',
+                name: 'Heading',
+            },
         },
-        angularUniversalSsrLinks : {
+        angularUniversalSsrLinks: {
             angularLink: '/lazy',
             federationLink: '/federation'
         },
         thirdPartyScriptsPostRequestPath: 'https://www.google-analytics.com/j/collect?**',
+        viteReactSimpleApp: {
+            viteLink: 'https://vitejs.dev/guide/features.html'
+        },
+        reactNestedRoutersApp: {
+            pageB: '/page-b',
+            app1: '/app-1',
+        },
+        nextJsHostReactRemoteApp: {
+            nextJsLink: 'https://nextjs.org/',
+            cardsLinks: [
+                'https://nextjs.org/docs',
+                'https://nextjs.org/learn/foundations/about-nextjs',
+                'https://github.com/vercel/next.js/tree/canary/examples',
+                Constants.commonConstantsData.commonLinks.vercel
+            ]
+        },
+        angular11SkullyApp: {
+            product: '/product'
+        }
+    }
+    public static readonly fullTestData = {
+        federatedCssTestData: {
+            css: {
+                path: 'consume-css-page',
+                bgColor: Constants.color.absoluteRed,
+            },
+            cssModule: {
+                path: 'consume-css-module-page',
+                bgColor: Constants.color.absoluteRed,
+            },
+            jss: {
+                path: 'consume-jss-page',
+                bgColor: Constants.color.aquamarine,
+            },
+            less: {
+                path: 'consume-less-page',
+                bgColor: Constants.color.brown,
+            },
+            scss: {
+                path: 'consume-scss-page',
+                bgColor: Constants.color.absoluteOrange,
+            },
+            styledComponent: {
+                path: 'consume-styled-component-page',
+                bgColor: Constants.color.absolutePurple,
+            },
+            tailwindGlobal: {
+                path: 'consume-tailwind-global-css-page',
+                bgColor: Constants.color.tailwindGreen,
+            },
+            tailwindModule: {
+                path: 'consume-tailwind-module-css-page',
+                bgColor: Constants.color.tailwindBlue,
+            }
+        }
     }
 }

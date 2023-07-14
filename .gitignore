@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+*.DS_STORE
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -105,7 +106,6 @@ buildServer
 
 # TernJS port file
 .tern-port
-/streamed-federation/.s3rver/
 
 # MacOS
 .DS_Store
@@ -120,3 +120,5 @@ buildServer
 **/cypress/videos/**
 **/cypress/downloads/**
 **/cypress/screenshots/**
+**/cypress/results/**
+**/cypress/report/**

@@ -41,7 +41,8 @@ export const baseSelectors = {
         strong: 'strong',
         emphasis: 'em',
         appRoot: 'app-root',
-        pre: 'pre'
+        pre: 'pre',
+        footer: 'footer'
     },
     ids: {
         app: '#app',
@@ -71,6 +72,7 @@ export const commonSelectors = {
     commonWidget: '[data-e2e="APP_{appQuantity}__WIDGET"]',
     formField: '[data-e2e="FORM_FIELD__{fieldName}"]',
     commonMicroFrontendsAppsCard: '[data-e2e="APP__CARD"]',
+    nextJsAppsLinkCard: '[data-e2e="TEXTED_LINK_CARD"]'
 }
 
 export const selectors = {
@@ -88,6 +90,14 @@ export const selectors = {
         divParent: '#parent',
         sharedBlock: '[data-e2e="SHARED__REACT_BLOCK"]',
         commonReactBlock: '[data-e2e="REACT__{blockType}_BLOCK"]'
+    },
+    reactApp: {
+        app2ContentBlock: '[data-e2e="APP_2_CONTENT_BLOCK"]',
+    },
+    react18Server2Server: {
+        idField: '[data-e2e="ID"]',
+        NameField: '[data-e2e="Name"]',
+        CompanyField: '[data-e2e="Company"]',
     },
     sharedStoreCrossFrameworkApp: {
         clicksCounter: '[data-e2e="CLICKS_COUNTER"]',
@@ -175,6 +185,16 @@ export const selectors = {
     },
     completeReactCaseApp: {
         toolTip: '.tool-tip',
+    },
+    angularVue: {
+        btn: '[data="VUE_IN_ANGULAR_BUTTON"]',
+        webComponent: 'unique-name',
+        interactionText: '[data="VUE_IN_ANGULAR_INTERACTION_TEXT"]',
+    },
+    federatedCssButton: '[data-e2e="FEDERATED_CSS_BUTTON"]',
+    viteReactSimple: {
+        reactLink: '[data-e2e="VITE_REACT_APP__LEARN_REACT_LINK"]',
+        viteLink: '[data-e2e="VITE_REACT_APP__VITE_DOCS_LINK"]'
     }
 }
 
@@ -189,7 +209,7 @@ export const updatedSelectors = {
     vue3DemoFederationWithViteApp: {
         buttons: {
             vite: selectors.vue3DemoFederationWithViteApp.vueAppButton.replace('{appType}', Constants.selectorParts.vue3DemoFederationWithViteApp.vite),
-            webpack: selectors.vue3DemoFederationWithViteApp.vueAppButton.replace('{appType}', Constants.selectorParts.vue3DemoFederationWithViteApp.webpack),
+            webpack: selectors.vue3DemoFederationWithViteApp.vueAppButton.replace('{appType}', Constants.commonConstantsData.webpack),
             common: `${baseSelectors.tags.coreElements.div}[class*= "content"]`,
         }
     },
@@ -210,5 +230,8 @@ export const updatedSelectors = {
         componentBorder: `${selectors.craReactRewiredApp.componentInfo}${baseSelectors.css.style
             .replace('{style}', Constants.color.nonRgbValues.borderRed)}`
     },
+    viteReactSimpleApp: {
+        headerBlock: `${baseSelectors.tags.headers.header} ${baseSelectors.tags.coreElements.div}`,
+    }
 }
 

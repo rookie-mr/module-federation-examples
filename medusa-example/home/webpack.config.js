@@ -14,7 +14,7 @@ const {
 } = require('webpack');
 const path = require('path');
 
-const dashboardURL = `${process.env.DASHBOARD_BASE_URL}/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`;
+const dashboardURL = `${process.env.DASHBOARD_BASE_URL}/env/development/get-remote?token=${process.env.DASHBOARD_READ_TOKEN}`;
 
 module.exports = {
   entry: './src/index',
@@ -61,7 +61,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        loader: 'esbuild-loader',
+        loader: require.resolve('esbuild-loader'),
         exclude: /node_modules/,
         options: {
           loader: 'jsx',

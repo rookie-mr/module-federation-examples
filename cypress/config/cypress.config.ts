@@ -1,7 +1,8 @@
 import { defineConfig } from "cypress";
+
 const fs = require('fs')
 const path = require('path');
-
+const allureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 async function setupNodeEvents(
   on: Cypress.PluginEvents,
@@ -77,6 +78,8 @@ async function setupNodeEvents(
   }
 )
 
+allureWriter(on, config);
+
   return config;
 }
 
@@ -101,13 +104,25 @@ export default defineConfig({
       runMode: 1,
     },
     env: {
+      allure: true,
+      allureResultsPath: '../../results/allure-results',
       localhost3000: "http://localhost:3000",
       localhost3001: "http://localhost:3001",
       localhost3002: "http://localhost:3002",
       localhost3003: "http://localhost:3003",
       localhost3004: "http://localhost:3004",
       localhost3005: "http://localhost:3005",
+      localhost3006: "http://localhost:3006",
+      localhost3007: "http://localhost:3007",
       localhost4000: "http://localhost:4000",
+      localhost4001: "http://localhost:4001",
+      localhost4002: "http://localhost:4002",
+      localhost4003: "http://localhost:4003",
+      localhost4004: "http://localhost:4004",
+      localhost4005: "http://localhost:4005",
+      localhost4006: "http://localhost:4006",
+      localhost4007: "http://localhost:4007",
+      localhost4008: "http://localhost:4008",
       localhost4173: "http://localhost:4173",
       localhost4200: "http://localhost:4200",
       localhost4201: "http://localhost:4201",
@@ -118,9 +133,11 @@ export default defineConfig({
       localhost8080: "http://localhost:8080",
       localhost8081: "http://localhost:8081",
       localhost8082: "http://localhost:8082",
+      localhost8083: "http://localhost:8083",
+      localhost8084: "http://localhost:8084",
       localhost9000: "http://localhost:9000",
       localhost9001: "http://localhost:9001",
-      localhost9002: "http://localhost:9002",
+      localhost9002: "http://localhost:9002"
     },
     setupNodeEvents
   },

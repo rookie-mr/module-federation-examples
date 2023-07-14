@@ -24,22 +24,26 @@ appsData.forEach((
         appType: string
     }
 )=>{
-    describe(`Check ${property.appType} App starts and running`, () => {
-        before(()=> {
-            basePage.openLocalhost(property.host)
-        })
-        it(`Check ${property.appType} App UI elements`, ()=> {
-            basePage.checkUrlText(`http://localhost:${property.host}/`, true)
-            if (property.host == 8080){
-                basePage.checkElementWithTextPresence({
-                    selector: baseSelectors.tags.coreElements.div,
-                    text: String(property.appName)
+    describe('React Host NextJS Remote', () => {
+        context(`Check ${property.appType} App UI elements`, () => {
+            before(()=> {
+                basePage.openLocalhost({
+                    number: property.host
                 })
-                basePage.checkElementWithTextPresence({
-                    selector: baseSelectors.tags.navigation,
-                    text: String (property.appNav)
-                })
-            }
+            })
+            it(`Check ${property.appType} App UI elements`, ()=> {
+                basePage.checkUrlText(`http://localhost:${property.host}/`, true)
+                if (property.host == 8080){
+                    basePage.checkElementWithTextPresence({
+                        selector: baseSelectors.tags.coreElements.div,
+                        text: String(property.appName)
+                    })
+                    basePage.checkElementWithTextPresence({
+                        selector: baseSelectors.tags.navigation,
+                        text: String (property.appNav)
+                    })
+                }
+            })
         })
     })
 })
